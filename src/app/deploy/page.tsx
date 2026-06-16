@@ -1,18 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount, useWalletClient, useChainId, usePublicClient } from "wagmi";
+import { useAccount, useWalletClient, useChainId, usePublicClient, useConnect } from "wagmi";
+import { metaMask, injected } from "wagmi/connectors";
 import { Navbar } from "@/components/Navbar";
 import { useMarketContract } from "@/hooks/useMarketContract";
 import { useContractAddress } from "@/hooks/useContractAddress";
 import { arcTestnet } from "@/lib/chain";
 import { ARCSCAN_URL } from "@/lib/contract";
 
+function hasMetaMask() {
+  if (typeof window === "undefined") return false;
+  const ethereum = (window as unknown as { ethereum?: unknown }).ethereum;
+  return (
+    !!ethereum &&
+    typeof ethereum === "object" &&
+    "isMetaMask" in ethereum &&
+    ethereum.isMetaMask === true
+  );
+}
+
 export default function DeployPage() {
   const { isConnected, address: walletAddress } = useAccount();
   const chainId = useChainId();
   const { data: walletClient } = useWalletClient();
   const publicClient = usePublicClient();
+  const { connect, isPending: isConnecting } = useConnect();
   const { bytecode, abi } = useMarketContract();
   const { address: savedAddress, reload } = useContractAddress();
 
@@ -22,13 +35,21 @@ export default function DeployPage() {
 
   const isCorrectChain = chainId === arcTestnet.id;
 
+  const handleConnect = () => {
+    if (hasMetaMask()) {
+      connect({ connector: metaMask() });
+    } else {
+      connect({ connector: injected() });
+    }
+  };
+
   const handleDeploy = async () => {
     if (!walletClient || !walletAddress) {
       setError("Connect your wallet first.");
       return;
     }
     if (!isCorrectChain) {
-      setError(`Switch to ${arcTestnet.name} in your wallet.`);
+      setError(`Switch to ${arcTestnet.name} (Chain ID ${arcTestnet.id}) in your wallet.`);
       return;
     }
     setDeploying(true);
@@ -80,7 +101,7 @@ export default function DeployPage() {
               </p>
               <p>
                 <span className="font-medium">Wallet:</span>{" "}
-                {isConnected ? walletAddress : "Not connected"}
+                {isConnected && walletAddress ? walletAddress : "Not connected"}
               </p>
               <p>
                 <span className="font-medium">Correct network:</span>{" "}
@@ -88,13 +109,25 @@ export default function DeployPage() {
               </p>
             </div>
 
-            <button
-              onClick={handleDeploy}
-              disabled={deploying || !isConnected || !isCorrectChain}
-              className="mt-6 w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30 disabled:opacity-50"
-            >
-              {deploying ? "Deploying..." : "Deploy SnapArcMarket"}
-            </button>
+            {!isConnected && (
+              <button
+                onClick={handleConnect}
+                disabled={isConnecting}
+                className="mt-6 w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30 disabled:opacity-50"
+              >
+                {isConnecting ? "Connecting..." : hasMetaMask() ? "Connect MetaMask" : "Connect Wallet"}
+              </button>
+            )}
+
+            {isConnected && (
+              <button
+                onClick={handleDeploy}
+                disabled={deploying || !isCorrectChain}
+                className="mt-6 w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30 disabled:opacity-50"
+              >
+                {deploying ? "Deploying..." : "Deploy SnapArcMarket"}
+              </button>
+            )}
 
             {error && (
               <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
