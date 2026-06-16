@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount, useWalletClient, useChainId, usePublicClient, useConnect, useSwitchChain } from "wagmi";
+import { useAccount, useChainId, usePublicClient, useConnect, useSwitchChain } from "wagmi";
+import { createWalletClient, custom } from "viem";
 import { injected } from "wagmi/connectors";
 import { rabby, hasRabby } from "@/lib/rabbyConnector";
 import { Navbar } from "@/components/Navbar";
@@ -11,9 +12,8 @@ import { arcTestnet } from "@/lib/chain";
 import { ARCSCAN_URL } from "@/lib/contract";
 
 export default function DeployPage() {
-  const { isConnected, address: walletAddress } = useAccount();
+  const { isConnected, address: walletAddress, connector } = useAccount();
   const chainId = useChainId();
-  const { data: walletClient } = useWalletClient();
   const publicClient = usePublicClient();
   const { connect, isPending: isConnecting } = useConnect();
   const { switchChain, isPending: isSwitching } = useSwitchChain();
@@ -35,7 +35,7 @@ export default function DeployPage() {
   };
 
   const handleDeploy = async () => {
-    if (!walletClient || !walletAddress) {
+    if (!connector || !walletAddress) {
       setError("Connect your wallet first.");
       return;
     }
@@ -46,6 +46,15 @@ export default function DeployPage() {
     setDeploying(true);
     setError(null);
     try {
+      const provider = await connector.getProvider();
+      if (!provider) {
+        throw new Error("Wallet provider not found.");
+      }
+      const walletClient = createWalletClient({
+        account: walletAddress,
+        chain: arcTestnet,
+        transport: custom(provider as any),
+      });
       const hash = await walletClient.deployContract({
         abi,
         bytecode,
