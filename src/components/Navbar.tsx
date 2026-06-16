@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { WalletButton } from "./WalletButton";
 
 const navLinks = [
@@ -10,31 +11,12 @@ const navLinks = [
   { href: "/deploy", label: "Deploy" },
 ];
 
-function LogoIcon() {
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="text-indigo-600 dark:text-indigo-400"
-    >
-      <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
-      <circle cx="12" cy="13" r="3" />
-    </svg>
-  );
-}
-
 export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/80 backdrop-blur-lg dark:border-slate-800/70 dark:bg-slate-950/80">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2 text-xl font-bold tracking-tight">
-          <LogoIcon />
+          <Image src="/logo.svg" alt="Snap Arc" width={32} height={32} className="rounded-lg" />
           <span className="gradient-text">Snap Arc</span>
         </Link>
         <nav className="hidden items-center gap-6 md:flex">

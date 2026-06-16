@@ -1,24 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount, useWalletClient, useChainId, usePublicClient, useConnect } from "wagmi";
-import { metaMask, injected } from "wagmi/connectors";
+import { useAccount, useWalletClient, useChainId, usePublicClient, useConnect, useSwitchChain } from "wagmi";
+import { injected } from "wagmi/connectors";
 import { Navbar } from "@/components/Navbar";
 import { useMarketContract } from "@/hooks/useMarketContract";
 import { useContractAddress } from "@/hooks/useContractAddress";
 import { arcTestnet } from "@/lib/chain";
 import { ARCSCAN_URL } from "@/lib/contract";
-
-function hasMetaMask() {
-  if (typeof window === "undefined") return false;
-  const ethereum = (window as unknown as { ethereum?: unknown }).ethereum;
-  return (
-    !!ethereum &&
-    typeof ethereum === "object" &&
-    "isMetaMask" in ethereum &&
-    ethereum.isMetaMask === true
-  );
-}
 
 export default function DeployPage() {
   const { isConnected, address: walletAddress } = useAccount();
@@ -26,6 +15,7 @@ export default function DeployPage() {
   const { data: walletClient } = useWalletClient();
   const publicClient = usePublicClient();
   const { connect, isPending: isConnecting } = useConnect();
+  const { switchChain, isPending: isSwitching } = useSwitchChain();
   const { bytecode, abi } = useMarketContract();
   const { address: savedAddress, reload } = useContractAddress();
 
@@ -36,11 +26,11 @@ export default function DeployPage() {
   const isCorrectChain = chainId === arcTestnet.id;
 
   const handleConnect = () => {
-    if (hasMetaMask()) {
-      connect({ connector: metaMask() });
-    } else {
-      connect({ connector: injected() });
-    }
+    connect({ connector: injected() });
+  };
+
+  const handleSwitch = () => {
+    switchChain?.({ chainId: arcTestnet.id });
   };
 
   const handleDeploy = async () => {
@@ -115,14 +105,24 @@ export default function DeployPage() {
                 disabled={isConnecting}
                 className="mt-6 w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30 disabled:opacity-50"
               >
-                {isConnecting ? "Connecting..." : hasMetaMask() ? "Connect MetaMask" : "Connect Wallet"}
+                {isConnecting ? "Connecting..." : "Connect Wallet"}
               </button>
             )}
 
-            {isConnected && (
+            {isConnected && !isCorrectChain && (
+              <button
+                onClick={handleSwitch}
+                disabled={isSwitching}
+                className="mt-6 w-full rounded-xl bg-amber-500 px-4 py-3 font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:bg-amber-400 hover:shadow-amber-500/30 disabled:opacity-50"
+              >
+                {isSwitching ? "Switching..." : `Switch to ${arcTestnet.name}`}
+              </button>
+            )}
+
+            {isConnected && isCorrectChain && (
               <button
                 onClick={handleDeploy}
-                disabled={deploying || !isCorrectChain}
+                disabled={deploying}
                 className="mt-6 w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30 disabled:opacity-50"
               >
                 {deploying ? "Deploying..." : "Deploy SnapArcMarket"}
@@ -146,7 +146,7 @@ export default function DeployPage() {
                 rel="noopener noreferrer"
                 className="mt-2 inline-block text-sm font-medium hover:underline"
               >
-                View on ArcScan
+                View on Arc Scan
               </a>
             </div>
           )}

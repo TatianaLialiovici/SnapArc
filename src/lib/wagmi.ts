@@ -4,7 +4,7 @@ import { arcTestnet } from "./chain";
 
 export const config = createConfig({
   chains: [arcTestnet],
-  connectors: [metaMask(), injected()],
+  connectors: [injected(), metaMask()],
   transports: {
     [arcTestnet.id]: http(process.env.NEXT_PUBLIC_ARC_TESTNET_RPC),
   },

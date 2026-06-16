@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./public/logo.svg" alt="Snap Arc logo" width="120" />
+</p>
+
 # Snap Arc
 
 A micro-marketplace for photo licenses on the **Arc Testnet**.
