@@ -2,6 +2,7 @@
 
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { injected } from "wagmi/connectors";
+import { rabby, hasRabby } from "@/lib/rabbyConnector";
 
 export function WalletButton() {
   const { address, isConnected, isConnecting } = useAccount();
@@ -19,13 +20,17 @@ export function WalletButton() {
     );
   }
 
+  const handleConnect = () => {
+    connect({ connector: hasRabby() ? rabby() : injected() });
+  };
+
   return (
     <button
-      onClick={() => connect({ connector: injected() })}
+      onClick={handleConnect}
       disabled={isConnecting}
       className="rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30"
     >
-      {isConnecting ? "Connecting..." : "Connect Wallet"}
+      {isConnecting ? "Connecting..." : hasRabby() ? "Connect Rabby" : "Connect Wallet"}
     </button>
   );
 }

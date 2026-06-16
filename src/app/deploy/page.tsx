@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAccount, useWalletClient, useChainId, usePublicClient, useConnect, useSwitchChain } from "wagmi";
 import { injected } from "wagmi/connectors";
+import { rabby, hasRabby } from "@/lib/rabbyConnector";
 import { Navbar } from "@/components/Navbar";
 import { useMarketContract } from "@/hooks/useMarketContract";
 import { useContractAddress } from "@/hooks/useContractAddress";
@@ -26,7 +27,7 @@ export default function DeployPage() {
   const isCorrectChain = chainId === arcTestnet.id;
 
   const handleConnect = () => {
-    connect({ connector: injected() });
+    connect({ connector: hasRabby() ? rabby() : injected() });
   };
 
   const handleSwitch = () => {
@@ -105,7 +106,7 @@ export default function DeployPage() {
                 disabled={isConnecting}
                 className="mt-6 w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30 disabled:opacity-50"
               >
-                {isConnecting ? "Connecting..." : "Connect Wallet"}
+                {isConnecting ? "Connecting..." : hasRabby() ? "Connect Rabby" : "Connect Wallet"}
               </button>
             )}
 
