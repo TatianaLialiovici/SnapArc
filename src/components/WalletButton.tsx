@@ -1,7 +1,18 @@
 "use client";
 
 import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { injected } from "wagmi/connectors";
+import { injected, metaMask } from "wagmi/connectors";
+
+function hasMetaMask() {
+  if (typeof window === "undefined") return false;
+  const ethereum = (window as unknown as { ethereum?: unknown }).ethereum;
+  return (
+    !!ethereum &&
+    typeof ethereum === "object" &&
+    "isMetaMask" in ethereum &&
+    ethereum.isMetaMask === true
+  );
+}
 
 export function WalletButton() {
   const { address, isConnected, isConnecting } = useAccount();
@@ -19,13 +30,21 @@ export function WalletButton() {
     );
   }
 
+  const handleConnect = () => {
+    if (hasMetaMask()) {
+      connect({ connector: metaMask() });
+    } else {
+      connect({ connector: injected() });
+    }
+  };
+
   return (
     <button
-      onClick={() => connect({ connector: injected() })}
+      onClick={handleConnect}
       disabled={isConnecting}
       className="rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30"
     >
-      {isConnecting ? "Connecting..." : "Connect Wallet"}
+      {isConnecting ? "Connecting..." : hasMetaMask() ? "Connect MetaMask" : "Connect Wallet"}
     </button>
   );
 }
