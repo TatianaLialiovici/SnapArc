@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground: 15 23 42;
+  --background: 250 250 252;
+  --card: 255 255 255;
+  --accent: 99 102 241;
+  --accent-hover: 79 70 229;
+  --muted: 100 116 139;
+  --border: 226 232 240;
+  --success: 16 185 129;
+  --danger: 244 63 94;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground: 248 250 252;
+    --background: 15 23 42;
+    --card: 30 41 59;
+    --accent: 129 140 248;
+    --accent-hover: 165 180 252;
+    --muted: 148 163 184;
+    --border: 51 65 85;
+    --success: 52 211 153;
+    --danger: 251 113 133;
+  }
+}
+
+body {
+  color: rgb(var(--foreground));
+  background-color: rgb(var(--background));
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, rgb(var(--accent)) 0%, rgb(var(--accent-hover)) 100%);
+  }
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}

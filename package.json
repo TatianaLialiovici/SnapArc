@@ -1,0 +1,53 @@
+{
+  "name": "snaparc",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "compile": "hardhat compile",
+    "test": "hardhat test && vitest run",
+    "test:frontend": "vitest run",
+    "test:contract": "hardhat test",
+    "deploy": "hardhat run scripts/deploy.ts --network arcTestnet",
+    "agent:buyer": "tsx scripts/agent-buyer.ts",
+    "agent:royalty": "tsx scripts/agent-royalty.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.101.0",
+    "next": "14.2.5",
+    "react": "^18",
+    "react-dom": "^18",
+    "viem": "^2.52.2",
+    "wagmi": "^2.19.5"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.12",
+    "@nomicfoundation/hardhat-viem": "^2.1.3",
+    "@openzeppelin/contracts": "^5.6.1",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@testing-library/react": "^16.3.2",
+    "@types/chai": "^4.3.20",
+    "@types/jest": "^30.0.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.19.43",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@vitejs/plugin-react": "^6.0.2",
+    "chai": "^4.5.0",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.5",
+    "hardhat": "^2.22.19",
+    "jsdom": "^29.1.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.22.4",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.9"
+  }
+}
