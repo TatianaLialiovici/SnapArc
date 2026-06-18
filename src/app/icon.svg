@@ -1,0 +1,18 @@
+<svg width="64" height="64" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="fav-aura" cx="42%" cy="38%" r="70%">
+      <stop offset="0%" stop-color="#FCE9EF"/>
+      <stop offset="38%" stop-color="#F4B2C4"/>
+      <stop offset="72%" stop-color="#C4B2F0"/>
+      <stop offset="100%" stop-color="#A8C4F4"/>
+    </radialGradient>
+    <linearGradient id="fav-ring" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E88EB2"/>
+      <stop offset="100%" stop-color="#A8C4F4"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="120" fill="#F8F6F4"/>
+  <circle cx="256" cy="256" r="104" fill="url(#fav-aura)"/>
+  <circle cx="222" cy="220" r="28" fill="#FFFFFF" opacity="0.55"/>
+  <path d="M256 104 a152 152 0 1 1 -107.5 44.5" stroke="url(#fav-ring)" stroke-width="28" stroke-linecap="round" fill="none"/>
+</svg>

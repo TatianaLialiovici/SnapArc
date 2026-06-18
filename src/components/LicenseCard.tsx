@@ -59,39 +59,43 @@ export function LicenseCard({ tokenId }: LicenseCardProps) {
   const licenseTuple = license as LicenseTuple | undefined;
 
   return (
-    <div className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
-      <div className="relative aspect-video overflow-hidden bg-slate-100 dark:bg-slate-800">
+    <div className="surface group overflow-hidden p-0 transition-transform duration-500 hover:-translate-y-1.5">
+      <div className="relative m-3 aspect-[4/3] overflow-hidden rounded-2xl bg-[rgb(var(--paper-2))]">
         {photoTuple?.[3] ? (
           <Image
             src={photoTuple[3]}
             alt={photoTuple[1]}
             fill
-            className="object-cover transition duration-500 group-hover:scale-105"
+            className="object-cover transition duration-700 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
-          <div className="flex h-full items-center justify-center text-sm text-slate-500">Loading...</div>
+          <div className="aura-stage h-full w-full">
+            <div className="aura-blob h-full w-full" style={{ borderRadius: "16px" }}>
+              <div className="aura-grain" />
+            </div>
+          </div>
         )}
+        <span className="absolute left-3 top-3 rounded-full bg-[rgba(255,255,255,0.85)] px-2.5 py-1 font-mono text-[0.6rem] uppercase tracking-widest text-ink-soft backdrop-blur">
+          License #{tokenId.toString()}
+        </span>
       </div>
-      <div className="p-5">
-        <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100">{photoTuple?.[1] ?? "License"}</h3>
-        <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">
-          {photoTuple?.[2]}
-        </p>
-        <div className="mt-4 space-y-1 text-sm text-slate-500">
-          <p>Token ID: {tokenId.toString()}</p>
-          <p>Buyer: {licenseTuple ? truncateAddress(licenseTuple[1]) : "-"}</p>
-          <p>Price: {licenseTuple ? formatUsdc(licenseTuple[2]) : "-"}</p>
-          <p>Purchased: {licenseTuple ? formatDate(licenseTuple[3]) : "-"}</p>
+      <div className="px-5 pb-5">
+        <h3 className="display-title text-xl text-ink">{photoTuple?.[1] ?? "License"}</h3>
+        <p className="mt-1.5 line-clamp-2 text-sm text-ink-soft">{photoTuple?.[2]}</p>
+        <div className="mt-4 space-y-1.5 font-mono text-xs text-ink-faint">
+          <p>BUYER // {licenseTuple ? truncateAddress(licenseTuple[1]) : "—"}</p>
+          <p>PRICE // {licenseTuple ? formatUsdc(licenseTuple[2]) : "—"}</p>
+          <p>CAPTURED // {licenseTuple ? formatDate(licenseTuple[3]) : "—"}</p>
         </div>
         {!!tokenURI && (
           <a
             href={tokenURI as string}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-4 inline-block text-sm font-medium text-indigo-600 hover:underline"
+            className="mt-4 inline-block text-sm font-medium text-[rgb(var(--accent))] hover:underline"
           >
-            View license metadata
+            View license metadata →
           </a>
         )}
       </div>

@@ -11,8 +11,8 @@ function renderWithProviders(ui: React.ReactNode) {
 describe("Home page", () => {
   it("renders the headline and primary CTA", () => {
     renderWithProviders(<HomePage />);
-    expect(screen.getByText(/License photos with/i)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Upload a Photo/i })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Browse Licenses/i })).toBeInTheDocument();
+    expect(screen.getByText(/Capturing light/i)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Capture & License/i })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Browse the gallery/i })).toBeInTheDocument();
   });
 });

@@ -82,40 +82,30 @@ export default function DeployPage() {
   return (
     <>
       <Navbar />
-      <main className="relative min-h-screen overflow-hidden px-4 py-12">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950" />
+      <main className="relative min-h-screen overflow-hidden px-5 py-14">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-3xl font-bold">Deploy the marketplace</h1>
-          <p className="mt-2 text-slate-600 dark:text-slate-300">
+          <span className="label-mono fade-rise">Setup // On-Chain</span>
+          <h1 className="display-title mt-3 text-4xl text-ink fade-rise sm:text-5xl">Deploy the marketplace</h1>
+          <p className="mt-3 text-ink-soft fade-rise">
             This contract stores every photo, license, and payment. The deployment is signed by your wallet
             and recorded on {arcTestnet.name}.
           </p>
 
-          <div className="mt-8 rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
-            <div className="space-y-3 text-sm">
-              <p>
-                <span className="font-medium">Network:</span> {arcTestnet.name}
-              </p>
-              <p>
-                <span className="font-medium">Chain ID:</span> {arcTestnet.id}
-              </p>
-              <p>
-                <span className="font-medium">Wallet:</span>{" "}
-                {isConnected && walletAddress ? walletAddress : "Not connected"}
-              </p>
-              <p>
-                <span className="font-medium">Correct network:</span>{" "}
-                {isConnected ? (isCorrectChain ? "Yes" : "No") : "-"}
-              </p>
+          <div className="surface mt-8 p-7 fade-rise" style={{ animationDelay: "0.1s" }}>
+            <div className="grid gap-3 font-mono text-xs text-ink-soft sm:grid-cols-2">
+              <p>NETWORK // {arcTestnet.name}</p>
+              <p>CHAIN ID // {arcTestnet.id}</p>
+              <p className="break-all">WALLET // {isConnected && walletAddress ? walletAddress : "Not connected"}</p>
+              <p>CORRECT NET // {isConnected ? (isCorrectChain ? "Yes" : "No") : "—"}</p>
             </div>
 
             {!isConnected && (
               <button
                 onClick={handleConnect}
                 disabled={isConnecting}
-                className="mt-6 w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30 disabled:opacity-50"
+                className="pill-primary mt-7 w-full justify-center"
               >
-                {isConnecting ? "Connecting..." : hasRabby() ? "Connect Rabby" : "Connect Wallet"}
+                {isConnecting ? "Connecting…" : hasRabby() ? "Connect Rabby" : "Connect Wallet"}
               </button>
             )}
 
@@ -123,9 +113,9 @@ export default function DeployPage() {
               <button
                 onClick={handleSwitch}
                 disabled={isSwitching}
-                className="mt-6 w-full rounded-xl bg-amber-500 px-4 py-3 font-semibold text-white shadow-lg shadow-amber-500/20 transition hover:bg-amber-400 hover:shadow-amber-500/30 disabled:opacity-50"
+                className="pill-ghost mt-7 w-full justify-center"
               >
-                {isSwitching ? "Switching..." : `Switch to ${arcTestnet.name}`}
+                {isSwitching ? "Switching…" : `Switch to ${arcTestnet.name}`}
               </button>
             )}
 
@@ -133,30 +123,30 @@ export default function DeployPage() {
               <button
                 onClick={handleDeploy}
                 disabled={deploying}
-                className="mt-6 w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30 disabled:opacity-50"
+                className="pill-primary mt-7 w-full justify-center"
               >
-                {deploying ? "Deploying..." : "Deploy SnapArcMarket"}
+                {deploying ? "Deploying…" : "Deploy SnapArcMarket"}
               </button>
             )}
 
             {error && (
-              <div className="mt-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+              <div className="mt-4 rounded-2xl border border-[rgba(214,84,96,0.35)] bg-[rgba(214,84,96,0.08)] p-3 text-sm text-[rgb(var(--danger))]">
                 {error}
               </div>
             )}
           </div>
 
           {savedAddress && (
-            <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-300">
-              <p className="font-semibold">Contract deployed</p>
-              <p className="mt-1 break-all font-mono text-sm">{savedAddress}</p>
+            <div className="surface mt-6 p-5">
+              <p className="display-title text-lg text-ink">Contract deployed</p>
+              <p className="mt-1 break-all font-mono text-sm text-ink-soft">{savedAddress}</p>
               <a
                 href={`${ARCSCAN_URL}/address/${savedAddress}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-2 inline-block text-sm font-medium hover:underline"
+                className="mt-2 inline-block text-sm font-medium text-[rgb(var(--accent))] hover:underline"
               >
-                View on Arc Scan
+                View on Arc Scan →
               </a>
             </div>
           )}

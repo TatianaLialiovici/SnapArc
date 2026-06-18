@@ -13,9 +13,10 @@ export function WalletButton() {
     return (
       <button
         onClick={() => disconnect()}
-        className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+        className="pill-ghost font-mono text-xs tracking-wider"
       >
-        {address.slice(0, 6)}...{address.slice(-4)}
+        <span className="inline-block h-2 w-2 rounded-full bg-[rgb(var(--success))]" />
+        {address.slice(0, 6)}…{address.slice(-4)}
       </button>
     );
   }
@@ -25,12 +26,8 @@ export function WalletButton() {
   };
 
   return (
-    <button
-      onClick={handleConnect}
-      disabled={isConnecting}
-      className="rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-md shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30"
-    >
-      {isConnecting ? "Connecting..." : hasRabby() ? "Connect Rabby" : "Connect Wallet"}
+    <button onClick={handleConnect} disabled={isConnecting} className="pill-primary text-sm">
+      {isConnecting ? "Connecting…" : hasRabby() ? "Connect Rabby" : "Connect Wallet"}
     </button>
   );
 }

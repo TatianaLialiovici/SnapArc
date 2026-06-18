@@ -2,6 +2,7 @@
 
 import { useAccount, useReadContract } from "wagmi";
 import { Navbar } from "@/components/Navbar";
+import { AuraBlob } from "@/components/AuraBlob";
 import { useMarketContract } from "@/hooks/useMarketContract";
 import { formatUsdc, truncateAddress } from "@/lib/format";
 
@@ -20,29 +21,30 @@ export default function EarningsPage() {
   return (
     <>
       <Navbar />
-      <main className="relative min-h-screen overflow-hidden px-4 py-12">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950" />
+      <main className="relative min-h-screen overflow-hidden px-5 py-14">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-3xl font-bold">Earnings</h1>
-          <p className="mt-2 text-slate-600 dark:text-slate-300">
-            Total USDC earned from license sales. Payments are transferred instantly to your wallet.
+          <span className="label-mono fade-rise">Studio // Direct Payouts</span>
+          <h1 className="display-title mt-3 text-4xl text-ink fade-rise sm:text-5xl">Earnings</h1>
+          <p className="mt-3 text-ink-soft fade-rise">
+            Total USDC earned from license sales. Payments are transferred instantly, direct to your wallet.
           </p>
 
           {!isConnected && (
-            <p className="mt-6 text-slate-500">Connect your wallet to see earnings.</p>
+            <p className="mt-6 font-mono text-sm text-ink-faint">Connect your wallet to see earnings.</p>
           )}
 
           {isConnected && (
-            <div className="mt-8 rounded-2xl border border-slate-200 bg-white/80 p-8 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
-              <p className="text-sm font-medium uppercase tracking-wide text-slate-500">
-                Lifetime earnings
-              </p>
-              <p className="mt-2 text-4xl font-extrabold text-indigo-600 dark:text-indigo-400">
-                {isLoading ? "..." : formatUsdc((earnings as bigint) ?? 0n)}
-              </p>
-              <p className="mt-4 text-sm text-slate-500">
-                Wallet: {walletAddress ? truncateAddress(walletAddress) : "-"}
-              </p>
+            <div className="surface mt-8 flex items-center gap-7 p-8 fade-rise" style={{ animationDelay: "0.1s" }}>
+              <AuraBlob size={120} />
+              <div>
+                <p className="label-mono">Lifetime earnings</p>
+                <p className="display-title mt-2 text-5xl text-ink">
+                  {isLoading ? "…" : formatUsdc((earnings as bigint) ?? 0n)}
+                </p>
+                <p className="mt-4 font-mono text-xs text-ink-faint">
+                  WALLET // {walletAddress ? truncateAddress(walletAddress) : "—"}
+                </p>
+              </div>
             </div>
           )}
         </div>

@@ -79,39 +79,40 @@ export default function UploadPage() {
   return (
     <>
       <Navbar />
-      <main className="relative overflow-hidden px-4 py-12">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-slate-950 dark:via-slate-900 dark:to-indigo-950" />
+      <main className="relative overflow-hidden px-5 py-14">
         <div className="mx-auto max-w-2xl">
-          <h1 className="text-3xl font-bold">Upload a photo</h1>
-          <p className="mt-2 text-slate-600 dark:text-slate-300">
-            List your work and set a license price between {MIN_PRICE_USDC} and {MAX_PRICE_USDC} USDC.
+          <span className="label-mono fade-rise">Capture // New Frame</span>
+          <h1 className="display-title mt-3 text-4xl text-ink fade-rise sm:text-5xl">Capture a frame</h1>
+          <p className="mt-3 text-ink-soft fade-rise">
+            List your work and set a license price between ${MIN_PRICE_USDC.toFixed(2)} and $
+            {MAX_PRICE_USDC.toFixed(2)} USDC. Buyers acquire it as an on-chain license NFT.
           </p>
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-6 rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/80">
+          <form onSubmit={handleSubmit} className="surface mt-8 space-y-6 p-7 fade-rise" style={{ animationDelay: "0.1s" }}>
             <div>
-              <label className="mb-1 block text-sm font-medium">Title</label>
+              <label className="label-mono mb-1.5 block">Title</label>
               <input
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-900"
+                className="field"
                 placeholder="Golden Gate at sunset"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium">Description</label>
+              <label className="label-mono mb-1.5 block">Description</label>
               <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-900"
+                className="field"
                 rows={3}
                 placeholder="Optional details about the photo"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium">Price (USDC)</label>
+              <label className="label-mono mb-1.5 block">Price / USDC</label>
               <input
                 required
                 type="number"
@@ -120,42 +121,42 @@ export default function UploadPage() {
                 max={MAX_PRICE_USDC}
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-900"
+                className="field"
               />
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium">Photo file</label>
+              <label className="label-mono mb-1.5 block">Photo file</label>
               <input
                 ref={fileRef}
                 type="file"
                 accept="image/*"
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
-                className="w-full text-sm"
+                className="w-full text-sm text-ink-soft file:mr-3 file:rounded-full file:border-0 file:bg-[rgb(var(--paper-2))] file:px-4 file:py-1.5 file:font-mono file:text-xs file:uppercase file:tracking-widest file:text-ink-soft"
               />
               <button
                 type="button"
                 onClick={handleUpload}
                 disabled={!file || uploading}
-                className="mt-3 rounded-xl bg-slate-800 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-slate-700 disabled:opacity-50"
+                className="pill-ghost mt-3 text-sm"
               >
-                {uploading ? "Uploading to IPFS..." : "Upload to IPFS"}
+                {uploading ? "Uploading to IPFS…" : "Upload to IPFS"}
               </button>
             </div>
 
             <div>
-              <label className="mb-1 block text-sm font-medium">Image URL (IPFS or direct)</label>
+              <label className="label-mono mb-1.5 block">Image URL (IPFS or direct)</label>
               <input
                 required
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-2 transition focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-900"
+                className="field"
                 placeholder="https://ipfs.io/ipfs/Qm..."
               />
             </div>
 
             {error && (
-              <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-300">
+              <div className="rounded-2xl border border-[rgba(214,84,96,0.35)] bg-[rgba(214,84,96,0.08)] p-3 text-sm text-[rgb(var(--danger))]">
                 {error}
               </div>
             )}
@@ -163,17 +164,17 @@ export default function UploadPage() {
             <button
               type="submit"
               disabled={isSubmitting || isConfirming || !isConnected}
-              className="w-full rounded-xl bg-indigo-600 px-4 py-3 font-semibold text-white shadow-lg shadow-indigo-600/20 transition hover:bg-indigo-500 hover:shadow-indigo-600/30 disabled:opacity-50"
+              className="pill-primary w-full justify-center"
             >
-              {isSubmitting ? "Submitting..." : isConfirming ? "Confirming..." : "List Photo"}
+              {isSubmitting ? "Submitting…" : isConfirming ? "Confirming…" : "List Photo"}
             </button>
           </form>
 
           {isSuccess && (
-            <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/30 dark:text-emerald-300">
-              <p className="font-semibold">Photo listed successfully!</p>
-              <Link href="/browse" className="mt-2 inline-block text-sm font-medium text-indigo-600 hover:underline">
-                View in marketplace
+            <div className="surface mt-6 p-5">
+              <p className="display-title text-lg text-ink">Frame captured successfully.</p>
+              <Link href="/browse" className="mt-2 inline-block text-sm font-medium text-[rgb(var(--accent))] hover:underline">
+                View in the gallery →
               </Link>
             </div>
           )}
