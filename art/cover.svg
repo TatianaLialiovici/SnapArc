@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 250" width="760" height="250" role="img" aria-label="SnapArc — a contact sheet of captured-aura frames">
+  <defs>
+    <linearGradient id="saPaper" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8f6f4"/>
+      <stop offset="1" stop-color="#f0edeb"/>
+    </linearGradient>
+    <radialGradient id="saWashA" cx="12%" cy="0%" r="60%">
+      <stop offset="0" stop-color="#a8c4f4" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#a8c4f4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="saWashB" cx="96%" cy="8%" r="55%">
+      <stop offset="0" stop-color="#f4b2c4" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#f4b2c4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="auraA" cx="34%" cy="32%" r="72%">
+      <stop offset="0" stop-color="#f4b2c4"/>
+      <stop offset="50%" stop-color="#e88eb2" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#c4b2f0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="auraB" cx="62%" cy="38%" r="72%">
+      <stop offset="0" stop-color="#a8c4f4"/>
+      <stop offset="52%" stop-color="#c4b2f0" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#f4b2c4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="auraC" cx="46%" cy="60%" r="72%">
+      <stop offset="0" stop-color="#fcf4ec"/>
+      <stop offset="46%" stop-color="#f4b2c4" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#a8c4f4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="auraBlur" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="saGrain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" result="n"/>
+      <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0"/>
+    </filter>
+    <!-- one reusable contact-sheet cell -->
+  </defs>
+
+  <rect width="760" height="250" rx="20" fill="url(#saPaper)"/>
+  <rect width="760" height="250" rx="20" fill="url(#saWashA)"/>
+  <rect width="760" height="250" rx="20" fill="url(#saWashB)"/>
+
+  <!-- contact-sheet top strip -->
+  <g font-family="ui-monospace,Menlo,monospace" fill="#96909c" font-size="10" letter-spacing="2.5">
+    <text x="40" y="42">CONTACT SHEET — SNAPARC / 36 EXP.</text>
+    <text x="566" y="42">USDC · ARC</text>
+  </g>
+  <line x1="40" y1="54" x2="720" y2="54" stroke="#e0dbe0"/>
+
+  <!-- frame grid: 2 rows x 4 cols of grainy aura "photos" -->
+  <g>
+    <!-- row 1 -->
+    <g transform="translate(40,70)">
+      <rect width="150" height="68" rx="6" fill="#ffffff" stroke="#e0dbe0"/>
+      <clipPath id="c1"><rect x="6" y="6" width="138" height="56" rx="3"/></clipPath>
+      <g clip-path="url(#c1)"><rect x="6" y="6" width="138" height="56" fill="#faf7f7"/><ellipse cx="74" cy="34" rx="74" ry="40" fill="url(#auraA)" filter="url(#auraBlur)"/></g>
+      <text x="9" y="60" font-family="ui-monospace,monospace" font-size="7" fill="#ffffff" opacity="0.85">01</text>
+    </g>
+    <g transform="translate(216,70)">
+      <rect width="150" height="68" rx="6" fill="#ffffff" stroke="#e0dbe0"/>
+      <clipPath id="c2"><rect x="6" y="6" width="138" height="56" rx="3"/></clipPath>
+      <g clip-path="url(#c2)"><rect x="6" y="6" width="138" height="56" fill="#faf7f7"/><ellipse cx="74" cy="34" rx="74" ry="40" fill="url(#auraB)" filter="url(#auraBlur)"/></g>
+      <text x="9" y="60" font-family="ui-monospace,monospace" font-size="7" fill="#ffffff" opacity="0.85">02</text>
+    </g>
+    <g transform="translate(392,70)">
+      <rect width="150" height="68" rx="6" fill="#ffffff" stroke="#e0dbe0"/>
+      <clipPath id="c3"><rect x="6" y="6" width="138" height="56" rx="3"/></clipPath>
+      <g clip-path="url(#c3)"><rect x="6" y="6" width="138" height="56" fill="#faf7f7"/><ellipse cx="74" cy="34" rx="74" ry="40" fill="url(#auraC)" filter="url(#auraBlur)"/></g>
+      <text x="9" y="60" font-family="ui-monospace,monospace" font-size="7" fill="#5c5662" opacity="0.7">03</text>
+    </g>
+    <!-- selected frame (the licensed one) -->
+    <g transform="translate(568,70)">
+      <rect x="-4" y="-4" width="158" height="76" rx="9" fill="none" stroke="#d6608a" stroke-width="2"/>
+      <rect width="150" height="68" rx="6" fill="#ffffff" stroke="#e0dbe0"/>
+      <clipPath id="c4"><rect x="6" y="6" width="138" height="56" rx="3"/></clipPath>
+      <g clip-path="url(#c4)"><rect x="6" y="6" width="138" height="56" fill="#faf7f7"/><ellipse cx="74" cy="34" rx="74" ry="40" fill="url(#auraA)" filter="url(#auraBlur)"/></g>
+      <circle cx="135" cy="15" r="9" fill="#d6608a"/>
+      <path d="M131 15 l3 3 l5 -6" fill="none" stroke="#ffffff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+
+  <!-- wordmark band (bottom-left over its own light card) -->
+  <g transform="translate(40,158)">
+    <text x="0" y="44" font-family="Georgia,'Times New Roman',serif" font-size="52" letter-spacing="-1.5" fill="#201c22">Snap<tspan fill="#d6608a">Arc</tspan></text>
+    <text x="3" y="68" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13" letter-spacing="0.5" fill="#5c5662">Capturing aura — license a frame, the right lands in your wallet.</text>
+  </g>
+
+  <!-- soft price pill, bottom-right -->
+  <g transform="translate(566,176)">
+    <rect width="154" height="48" rx="24" fill="#ffffff" stroke="#e0dbe0"/>
+    <text x="18" y="22" font-family="ui-monospace,monospace" font-size="8" letter-spacing="2" fill="#96909c">PER FRAME</text>
+    <text x="18" y="38" font-family="Georgia,serif" font-size="17" fill="#201c22">0.10–0.50 USDC</text>
+  </g>
+
+  <!-- film grain wash -->
+  <rect width="760" height="250" rx="20" filter="url(#saGrain)" opacity="0.05"/>
+</svg>

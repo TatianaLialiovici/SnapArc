@@ -1,5 +1,7 @@
 # SnapArc — Usage & Rights Sheet
 
+<img src="art/cover.svg" width="680" alt="SnapArc — a contact sheet of captured-aura frames, licensed in USDC on Arc">
+
 Hi — if you're reading this you want to license one of my photographs. Good. This is the sheet I'd hand a client instead of a contract drafted by a stock agency's legal team. It tells you what I charge, what you're allowed to do with the picture, how the proof of your rights is recorded, and where the money actually lands. No account to register, no agency standing between us, no payout I'm waiting on. You pick a frame, you pay for it, the right is yours.
 
 SnapArc is the small storefront I built to do exactly that, and only that.
